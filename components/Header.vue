@@ -34,7 +34,7 @@ export default {
         //メニュー情報取得する。
         async setMenuList() {
             const query = { authorityList: [this.authority]};
-            const res = await  this.$axios.$post("http://localhost:8080/request/menu/", {data: query})
+            const res = await this.$axios.$post("http://localhost:8080/request/menu/", {data: query})
             if(res.result == 0){
                 this.menuList = res.menuList;
             } else if(res.result == 1){
