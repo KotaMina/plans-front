@@ -1,18 +1,16 @@
 <template>
-<header>
-        <div id="header-left">
-            <h1>{{this.title}}</h1>
-        </div>
-        <div id="header-right">
-            <ul>
-                <li v-for="(menu,index) in menuList" :key="index">
-                    {{menu.jpName}}
-                </li>
-            </ul>
-        </div>
-</header>
-
-
+    <header>
+            <div id="header-left">
+                <h1>{{this.title}}</h1>
+            </div>
+            <div id="header-right">
+                <ul>
+                    <li v-for="(menu,index) in menuList" :key="index">
+                        <nuxt-link :to="menu.path">{{menu.jpName}}</nuxt-link>
+                    </li>
+                </ul>
+            </div>
+    </header>
 </template>
 <script>
 import {mapState, mapMutations, mapGetters} from "vuex"
