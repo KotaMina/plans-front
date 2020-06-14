@@ -39,10 +39,18 @@ export default {
   */
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     ['cookie-universal-nuxt', { parseJSON: true }]
   ],
   axios: {
-
+      credentials: true,
+      proxy: true
+  },
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:8080',
+      headers: { 'x-Forwarded-Host': 'localhost:3000' }
+    }
   },
   /*
   ** Build configuration

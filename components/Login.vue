@@ -44,7 +44,7 @@ export default {
                 this.$store.state.common.errorList = [{message: "パスワードを入力してください。"}]
             }
             if(this.isNotNull(this.userId) && this.isNotNull(this.password)){
-                const res = await this.$axios.$post("http://localhost:8080/login/", { userId: this.userId, password: this.password });
+                const res = await this.$axios.$post("/api/login/", { userId: this.userId, password: this.password });
                 if(res.result == 1){
                     this.$store.state.common.errorList = res.errorList;
                 }else if(res.result==0){
@@ -55,7 +55,7 @@ export default {
                     this.$store.state.common.user = setCached;
                     //cookiesの保存期間を３日間とする。
                     this.$cookies.set("user", setCached, { maxAge: 60 * 60 * 24 * 3 })
-                    const menures = await this.$axios.$post("http://localhost:8080/request/menu/", {authorityList: [this.$store.state.common.authority]})
+                    const menures = await this.$axios.$post("/api/menu/", {authorityList: [this.$store.state.common.authority]})
                     if(menures.result == 0){
                         this.$store.state.common.menuList = menures.menuList;
                     } else if(menures.result == 1){
@@ -72,7 +72,7 @@ export default {
             this.$store.state.common.authority = "000";
             this.isEnterUserId = false;
             this.$store.state.common.errorList = []
-            const menures = await this.$axios.$post("http://localhost:8080/request/menu/", {authorityList: [this.$store.state.common.authority]})
+            const menures = await this.$axios.$post("/api/menu/", {authorityList: [this.$store.state.common.authority]})
             if(menures.result == 0){
                 this.$store.state.common.menuList = menures.menuList;
             } else if(menures.result == 1){
