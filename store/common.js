@@ -2,6 +2,7 @@ export const state = () => ({
     authority: "000",
     isLogin: false,
     menuList: [],
+    errorList: [],
     user: {},
 })
 

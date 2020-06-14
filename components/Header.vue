@@ -25,8 +25,7 @@ export default {
     },
     data(){
         return{
-            title: "plans",
-            errorList: []
+            title: "plans"
         }
     },
     created(){
@@ -41,7 +40,7 @@ export default {
         this.setMenuList();
     },
     computed:{
-        ...mapState("common", ["user","authority", "isLogin", "menuList"])
+        ...mapState("common", ["user","authority", "isLogin", "menuList", "errorList"])
     },
     methods:{
         //メニュー情報取得する。
@@ -50,9 +49,12 @@ export default {
             if(res.result == 0){
                 this.$store.state.common.menuList = res.menuList;
             } else if(res.result == 1){
-                this.errorList = res.errorList;
+               this.$store.state.common.errorList = res.errorList;
             }
         }
     }
 }
 </script>
+<style lang="scss">
+
+</style>
