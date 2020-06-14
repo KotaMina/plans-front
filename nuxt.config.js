@@ -49,7 +49,7 @@ export default {
   proxy: {
     '/api/': {
       target: 'http://localhost:8080',
-      headers: { 'x-Forwarded-Host': 'localhost:3000' }
+      headers: { 'x-Forwarded-Host': 'localhost:8080' }
     }
   },
   /*
