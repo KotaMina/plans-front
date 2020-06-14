@@ -1,7 +1,7 @@
 <template>
-    <div id="login_form">
+    <div class="outer_login">
         <template v-if="!this.$store.state.common.isLogin">
-            <div class="login">
+            <div class="inner_login">
                 <template v-if="!this.isEnterUserId">
                     <input v-model="userId" type="text" placeholder="ユーザーIDを入力ください。" />
                     <p v-if="errorList != null && errorList.length > 0">{{this.errorList[0].message}}</p>
@@ -16,7 +16,7 @@
             </div>
         </template>
         <template v-if="this.$store.state.common.isLogin">
-            <div class="logined">
+            <div class="inner_login">
                     <button type="button" v-on:click="logout">ログアウト</button>
             </div>
         </template>
@@ -36,7 +36,7 @@ export default {
         }
     },
     computed:{
-        ...mapState("common",["user","isLogin"])
+        ...mapState("common",["user","isLogin","menuList","authority"])
     },
     methods: {
         async login(){
@@ -51,17 +51,31 @@ export default {
                     this.errorList = res.errorList;
                 }else if(res.result==0){
                     this.$store.commit('common/logined');
-                    const setCached = { userId: this.userId, isLogin: true};
+                    const setCached = { userId: this.userId, isLogin: true, authority: res.authority };
+                    this.$store.state.common.authority = res.authority;
                     this.$store.state.common.user = setCached;
                     this.$cookies.set("user", setCached)
+                    const menures = await this.$axios.$post("http://localhost:8080/request/menu/", {authorityList: [this.$store.state.common.authority]})
+                    if(menures.result == 0){
+                        this.$store.state.common.menuList = menures.menuList;
+                    } else if(menures.result == 1){
+                        this.errorList = menures.errorList;
+                    }
                 }
             }
         },
-        logout(){
+        async logout(){
             this.$cookies.remove("user");
             this.$store.commit('common/logout');
             this.$store.state.common.user = {};
+            this.$store.state.common.authority = "000";
             this.isEnterUserId = false;
+            const menures = await this.$axios.$post("http://localhost:8080/request/menu/", {authorityList: [this.$store.state.common.authority]})
+            if(menures.result == 0){
+                this.$store.state.common.menuList = menures.menuList;
+            } else if(menures.result == 1){
+                this.errorList = menures.errorList;
+            }
         },
         isNotNull(params){
             return params != null && params != "";
