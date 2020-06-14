@@ -2,10 +2,17 @@
     <div id="login_form">
         <template v-if="!this.$store.state.common.isLogin">
             <div class="login">
-                <input v-model="userId" type="text" placeholder="ユーザーIDを入力ください。" />
-                <input v-model="password" type="password"  placeholder="パスワードを入力ください。" />
-                <button type="button" v-on:click="login">Login</button>
-                <p v-if="errorList != null && errorList.length > 0">{{this.errorList[0].message}}</p>
+                <template v-if="!this.isEnterUserId">
+                    <input v-model="userId" type="text" placeholder="ユーザーIDを入力ください。" />
+                    <p v-if="errorList != null && errorList.length > 0">{{this.errorList[0].message}}</p>
+                    <button type="button" v-on:click="enterUserId">次へ</button>
+                </template>
+                <template v-if="this.isEnterUserId">
+                    <button type="button" v-on:click="backEnterUserId">{{this.userId}}</button>
+                    <input v-model="password" type="password"  placeholder="パスワードを入力ください。" />
+                    <p v-if="errorList != null && errorList.length > 0">{{this.errorList[0].message}}</p>
+                    <button type="button" v-on:click="login">Login</button>
+                </template>
             </div>
         </template>
         <template v-if="this.$store.state.common.isLogin">
@@ -24,7 +31,8 @@ export default {
         return {
             userId: "",
             password: "",
-            errorList: [],
+            isEnterUserId: false,
+            errorList: []
         }
     },
     computed:{
@@ -32,11 +40,6 @@ export default {
     },
     methods: {
         async login(){
-            if(!this.isNotNull(this.userId)){
-                const err = {message: "ユーザーIDを入力してください。"}
-                this.errorList = []
-                this.errorList.push(err)
-            }
             if(!this.isNotNull(this.password)){
                 const err = {message: "パスワードを入力してください。"}
                 this.errorList = []
@@ -58,9 +61,24 @@ export default {
             this.$cookies.remove("user");
             this.$store.commit('common/logout');
             this.$store.state.common.user = {};
+            this.isEnterUserId = false;
         },
         isNotNull(params){
-            return params == null || params == "" ? false : true;
+            return params != null && params != "";
+        },
+        enterUserId(){
+            if(!this.isNotNull(this.userId)){
+                const err = {message: "ユーザーIDを入力してください。"}
+                this.errorList = []
+                this.errorList.push(err)
+            } else{
+                this.errorList = []
+                this.isEnterUserId = true;
+            }
+        },
+        backEnterUserId(){
+             this.errorList = []
+             this.isEnterUserId = false;
         }
     }
 }

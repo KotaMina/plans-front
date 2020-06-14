@@ -39,10 +39,10 @@ export default {
             this.$store.state.common.user = {};
         }
     },
+    computed:{
+        ...mapState("common", ["user","authority", "isLogin"])
+    },
     methods:{
-        //store
-        ...mapState("common", ["user","authority", "isLogin"]),
-
         //メニュー情報取得する。
         async setMenuList() {
             const query = { authorityList: [this.authority]};
