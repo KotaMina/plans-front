@@ -40,6 +40,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
+    '@nuxtjs/auth',
     ['cookie-universal-nuxt', { parseJSON: true }]
   ],
   axios: {
