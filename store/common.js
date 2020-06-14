@@ -8,4 +8,7 @@ export const mutations = {
     logined(state){
         state.isLogin = true;
     },
+    logout(state){
+        state.isLogin = false;
+    }
 }

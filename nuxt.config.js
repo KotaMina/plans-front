@@ -39,7 +39,7 @@ export default {
   */
   modules: [
     '@nuxtjs/axios',
-    ['cookie-universal-nuxt', { parseJSON: false }]
+    ['cookie-universal-nuxt', { parseJSON: true }]
   ],
   axios: {
 

@@ -26,15 +26,20 @@ export default {
             title: "plans",
             menuList: [],
             errorList: [],
-            authority: "000"
+            authority: "000",
+            user: this.$cookies.get('user')
         }
     },
     created(){
         this.setMenuList();
+        if(this.user != null){
+            this.$store.state.common.isLogin = this.user.isLogin
+            this.$store.state.common.userId = this.userId;
+        }
     },
     methods:{
         //store
-        ...mapState("common", ["userId","authority"]),
+        ...mapState("common", ["userId","authority", "isLogin"]),
 
         //メニュー情報取得する。
         async setMenuList() {
