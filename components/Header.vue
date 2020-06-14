@@ -10,12 +10,17 @@
                     </li>
                 </ul>
             </div>
+            <Login />
     </header>
 </template>
 <script>
+import Login from '~/components/Login.vue'
 import {mapState, mapMutations, mapGetters} from "vuex"
 
 export default {
+    components: {
+        Login
+    },
     data(){
         return{
             title: "plans",
