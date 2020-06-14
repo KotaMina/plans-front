@@ -37,6 +37,7 @@ export default {
                 this.errorList = res.errorList;
             }else if(res.result==0){
                 this.$store.commit('common/logined');
+                this.$store.state.common.userId = this.userId;
                 const setCached = { userId: this.userId, isLogin: true};
                 this.$cookies.set("user", setCached)
             }
