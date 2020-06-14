@@ -33,6 +33,8 @@ export default {
             this.$store.commit('common/logined');
             this.$store.state.common.user = this.$cookies.get('user');
             this.$store.state.common.authority = this.$cookies.get('user').authority;
+            //再度cookiesの保存期間を３日間にリセットする。
+            this.$cookies.set("user", this.$store.state.common.user, { maxAge: 60 * 60 * 24 * 3 })
         }else{
             this.$store.commit('common/logout');
             this.$store.state.common.user = {};

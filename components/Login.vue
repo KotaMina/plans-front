@@ -51,8 +51,10 @@ export default {
                     this.$store.commit('common/logined');
                     const setCached = { userId: this.userId, isLogin: true, authority: res.authority };
                     this.$store.state.common.authority = res.authority;
+
                     this.$store.state.common.user = setCached;
-                    this.$cookies.set("user", setCached)
+                    //cookiesの保存期間を３日間とする。
+                    this.$cookies.set("user", setCached, { maxAge: 60 * 60 * 24 * 3 })
                     const menures = await this.$axios.$post("http://localhost:8080/request/menu/", {authorityList: [this.$store.state.common.authority]})
                     if(menures.result == 0){
                         this.$store.state.common.menuList = menures.menuList;
@@ -66,6 +68,7 @@ export default {
             this.$cookies.remove("user");
             this.$store.commit('common/logout');
             this.$store.state.common.user = {};
+            //権限は未ログインとする。
             this.$store.state.common.authority = "000";
             this.isEnterUserId = false;
             this.$store.state.common.errorList = []
