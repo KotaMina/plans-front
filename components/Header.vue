@@ -1,7 +1,9 @@
 <template>
     <header>
             <div id="header-left">
+                <nuxt-link to="/">
                 <h1>{{this.title}}</h1>
+                </nuxt-link>
             </div>
             <div id="header-center">
                 <ul>
@@ -11,18 +13,16 @@
                 </ul>
             </div>
             <div id="header-right">
-            <Login />
+                <nuxt-link to="/login">
+                ログイン画面
+                </nuxt-link>
             </div>
     </header>
 </template>
 <script>
-import Login from '~/components/Login.vue'
 import {mapState, mapMutations, mapGetters} from "vuex"
 
 export default {
-    components: {
-        Login
-    },
     data(){
         return{
             title: "plans"
