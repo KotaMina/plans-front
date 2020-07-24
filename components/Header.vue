@@ -28,6 +28,14 @@ export default {
             title: "plans"
         }
     },
+    watch:{
+        chkCookies(){
+            if(this.$cookies.get("user") != null && this.$store.state.common.authority != this.$cookies.get("user").authority){
+                console.log("change!")
+                this.$cookies.set("user", this.$store.state.common.user, { maxAge: 60 * 60 * 24 * 3 })
+            }
+        }
+    },
     created(){
         if(this.$cookies.get('user') != null){
             this.$store.commit('common/logined');

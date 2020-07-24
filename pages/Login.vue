@@ -53,7 +53,6 @@ export default {
                     this.$store.state.common.authority = res.authority;
 
                     this.$store.state.common.user = setCached;
-                    //cookiesの保存期間を３日間とする。
                     this.$cookies.set("user", setCached, { maxAge: 60 * 60 * 24 * 3 })
                     const menures = await this.$axios.$post("/api/menu/", {authorityList: [this.$store.state.common.authority]})
                     if(menures.result == 0){
